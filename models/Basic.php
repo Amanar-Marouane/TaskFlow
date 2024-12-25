@@ -1,40 +1,4 @@
 <?php
-require_once("./Db.php");
-
-class Controller
-{
-    public function requestHandler()
-    {
-        $action = $_GET["action"];
-        switch ($action) {
-            case 'create':
-                $this->taskHandler();
-                break;
-        }
-    }
-
-    private function taskHandler()
-    {
-        $type = $_POST["taskType"];
-        switch ($type) {
-            case 'basic':
-                $task = new Basic();
-                if ($task->validation()) $task->createTask('Basic', null);
-                break;
-
-            case 'bug':
-                $task = new Bug();
-                $task->validation();
-                break;
-
-            case 'feature':
-                $task = new Feature();
-                $task->validation();
-                break;
-        }
-    }
-}
-
 class Basic
 {
     protected $task_title;
@@ -44,7 +8,7 @@ class Basic
 
     public function __construct() {}
 
-    private function get($property)
+    public function get($property)
     {
         if (property_exists($this, $property)) {
             return $this->$property;
@@ -52,7 +16,7 @@ class Basic
         throw new Exception("Property '$property' does not exist or is not accessible.");
     }
 
-    private function set($property, $value)
+    public function set($property, $value)
     {
         if (property_exists($this, $property)) {
             $this->$property = $value;
@@ -102,39 +66,6 @@ class Basic
         $stmt->bindParam(':task_status', $this->task_status);
         $stmt->bindParam(':assigned_to', $this->assigned_to);
         $stmt->execute();
-        header("Location: ./index.php");
+        header("Location: ./../html/index.php");
     }
-}
-
-class Bug extends Basic
-{
-    private $severity;
-    public function __construct() {}
-
-    public function validation()
-    {
-        if (parent::validation()) {
-            $this->severity = $_POST['importance'];
-            return parent::createTask('Bug', $this->severity);
-        }
-    }
-}
-
-class Feature extends Basic
-{
-    private $priority;
-    public function __construct() {}
-
-    public function validation()
-    {
-        if (parent::validation()) {
-            $this->priority = $_POST['importance'];
-            return $this->createTask('Feature', $this->priority);
-        }
-    }
-}
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $controller = new Controller();
-    $controller->requestHandler();
 }

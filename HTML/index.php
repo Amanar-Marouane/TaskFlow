@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once("./Db.php");
+require_once("./../db/Db.php");
 $db = new Db();
 $pdo = $db->connect();
 ?>
