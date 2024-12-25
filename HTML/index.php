@@ -52,7 +52,7 @@ $pdo = $db->connect();
                 <span class="text-sm text-gray-600">Bug</span>
             </div>
         </div>
-        <button class="bg-[#007bff] text-white px-4 py-2 rounded shadow">Add Task</button>
+        <button class="bg-[#007bff] text-white px-4 py-2 rounded shadow"><a href="./new_task.php">Add Task</a></button>
     </div>
 </section>
 
@@ -168,7 +168,7 @@ $pdo = $db->connect();
     </div>
 </section>
 
-<section class="mt-8 p-5 flex flex-col items-center">
+<section class="mt-ad p-5 flex flex-col items-center">
     <h2 class="text-lg font-semibold text-[#007bff] mb-4">Team Members</h2>
     <div class="mb-4 flex flex-wrap justify-center gap-5">
         <?php

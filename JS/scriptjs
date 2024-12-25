@@ -13,4 +13,22 @@ document.addEventListener("DOMContentLoaded", function () {
 
     toggleOpen.addEventListener('click', handleClick);
     toggleClose.addEventListener('click', handleClick);
+
+    let importance = document.querySelector("#importance");
+    let taskType = document.querySelector("#taskType");
+    let toHide = document.querySelector("#toHide");
+
+    if (importance && taskType) {
+        importance.style.display = "none";
+        toHide.style.display = "none";
+        taskType.addEventListener("change", () => {
+            if (taskType.value === "basic") {
+                importance.style.display = "none";
+                toHide.style.display = "none";
+            } else{
+                importance.style.display = "block";
+                toHide.style.display = "block";
+            }
+        })
+    }
 })
