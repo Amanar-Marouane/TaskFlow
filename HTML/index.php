@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once("./Db.php");
 $db = new Db();
 $pdo = $db->connect();
@@ -189,10 +190,13 @@ $pdo = $db->connect();
         ?>
     </div>
     <div>
-        <button class="bg-[#007bff] text-white px-4 py-2 rounded shadow">Add Member</button>
+        <button class="bg-[#007bff] text-white px-4 py-2 rounded shadow"><a href="./add_user.php">Add Member</a></button>
     </div>
     </div>
 </section>
 
-<?php require_once("./footer.php") ?>
+<?php 
+require_once("./footer.php");
+exit();
+?>
 
