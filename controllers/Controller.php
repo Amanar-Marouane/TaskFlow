@@ -1,8 +1,9 @@
 <?php
+require_once("./../db/Db.php");
+require_once("./../models/User.php");
 require_once('./../models/Basic.php');
 require_once('./../models/Bug.php');
 require_once('./../models/Feature.php');
-require_once("./../db/Db.php");
 
 class Controller
 {
@@ -12,6 +13,9 @@ class Controller
         switch ($action) {
             case 'create':
                 $this->taskHandler();
+                break;
+            case 'add':
+                $this->userHandler();
                 break;
         }
     }
@@ -35,6 +39,11 @@ class Controller
                 $task->validation();
                 break;
         }
+    }
+
+    private function userHandler(){
+        $user = new User();
+        $user->validation();
     }
 }
 

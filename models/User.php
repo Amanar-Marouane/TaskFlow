@@ -6,6 +6,8 @@ class User
     private $full_name;
     private $email;
 
+    public function __construct() {}
+
     public function get($property)
     {
         if (property_exists($this, $property)) {
@@ -22,45 +24,44 @@ class User
         throw new Exception("Property '$property' does not exist or is not accessible.");
     }
 
-    
-}
+    public function validation()
+    {
+        if (empty($_POST['full_name']) || empty($_POST['email'])) {
+            throw new Exception("The inputs should be filled!!");
+        } else {
+            if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+                throw new Exception("Check The email format");
+            } elseif (!preg_match("/^[a-zA-Z\s]+$/", $_POST['full_name'])) {
+                throw new Exception("Full name can only contain letters and spaces.");
+            } else {
+                $db = new Db();
+                $pdo = $db->connect();
+                $stmt = $pdo->prepare("SELECT * FROM users WHERE full_name = :name OR email = :email;");
+                $stmt->bindParam(':name', $_POST['full_name']);
+                $stmt->bindParam(':email', $_POST['email']);
+                $stmt->execute();
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $error = false;
-    if (empty($_POST['full_name'])) {
-        $error = true;
-        echo "Full name is required.<br>";
-    } elseif (!preg_match("/^[a-zA-Z\s]+$/", $_POST['full_name'])) {
-        $error = true;
-        echo "Full name can only contain letters and spaces.<br>";
+                if ($stmt->rowCount() > 0) {
+                    throw new Exception("The name Or The email already inserted!!");
+                } else {
+                    return $this->add();
+                }
+            }
+        }
     }
 
-    if (empty($_POST['email'])) {
-        $error = true;
-        echo "Email is required.<br>";
-    } elseif (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
-        $error = true;
-        echo "Invalid email format<br>";
-    }
+    private function add()
+    {
+        $this->full_name = $_POST['full_name'];
+        $this->email = $_POST['email'];
 
-    if (! $error) {
         $db = new Db();
         $pdo = $db->connect();
-
-        $stmt = $pdo->prepare("SELECT * FROM users WHERE full_name = :name OR email = :email;");
+        $stmt = $pdo->prepare("INSERT INTO users (full_name, email) VALUES (:name, :email);");
         $stmt->bindParam(':name', $_POST['full_name']);
         $stmt->bindParam(':email', $_POST['email']);
         $stmt->execute();
-
-        if ($stmt->rowCount() > 0) {
-            echo "The name Or The email already inserted!!";
-        } else {
-            $stmt = $pdo->prepare("INSERT INTO users (full_name, email) VALUES (:name, :email);");
-            $stmt->bindParam(':name', $_POST['full_name']);
-            $stmt->bindParam(':email', $_POST['email']);
-            $stmt->execute();
-            header("Location: ./index.php");
-            exit();
-        }
+        header("Location: ./../html/index.php");
+        exit();
     }
 }
