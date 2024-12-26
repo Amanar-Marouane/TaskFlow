@@ -22,28 +22,41 @@ class Controller
 
     private function taskHandler()
     {
-        $type = $_POST["taskType"];
-        switch ($type) {
-            case 'basic':
-                $task = new Basic();
-                if ($task->validation()) $task->createTask('Basic', null);
-                break;
+        try {
+            $type = $_POST["taskType"];
+            switch ($type) {
+                case 'basic':
+                    $task = new Basic();
+                    if ($task->validation()) $task->createTask('Basic', null);
+                    break;
 
-            case 'bug':
-                $task = new Bug();
-                $task->validation();
-                break;
+                case 'bug':
+                    $task = new Bug();
+                    $task->validation();
+                    break;
 
-            case 'feature':
-                $task = new Feature();
-                $task->validation();
-                break;
+                case 'feature':
+                    $task = new Feature();
+                    $task->validation();
+                    break;
+            }
+        } catch (Exception $e) {
+            $errorMessage = $e->getMessage();
+            header("Location: ./../html/new_task.php?error=" . urlencode($errorMessage));
+            exit();
         }
     }
 
-    private function userHandler(){
-        $user = new User();
-        $user->validation();
+    private function userHandler()
+    {
+        try {
+            $user = new User();
+            $user->validation();
+        } catch (Exception $e) {
+            $errorMessage = $e->getMessage();
+            header("Location: ./../html/add_user.php?error=" . urlencode($errorMessage));
+            exit();
+        }
     }
 }
 

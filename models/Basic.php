@@ -29,14 +29,8 @@ class Basic
         if (empty($_POST['title'])) {
             throw new Exception("Title property is null.");
         } else {
-            if (!(preg_match("/^[a-zA-Z0-9 ]+$/", $_POST['title']))) {
-                echo ("The title should only include alphabets and numbers and spaces!!");
-                if (isset($_POST['description'])) {
-                    if (preg_match("/^[a-zA-Z0-9 ]+$/", $_POST['description'])) {
-                        echo ("The description should only include alphabets and numbers and spaces!!");
-                        return;
-                    }
-                }
+            if (!(preg_match("/^[a-zA-Z0-9 ]+$/", $_POST['title']) && preg_match("/^[a-zA-Z0-9 ]+$/", $_POST['description']))) {
+                throw new Exception ("The title or the description should only include alphabets and numbers and spaces!!");
             } else {
                 return true;
             }

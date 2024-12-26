@@ -44,16 +44,16 @@
                     </li>
                     <li class='max-lg:border-b max-lg:py-3 px-3'>
                         <a href='./index.php'
-                            class='hover:text-[#007bff] text-[#007bff] block font-semibold text-[15px]'>Home</a>
+                            class='hover:text-[#007bff] text-[#007bff] block font-semibold text-[15px]'>Tableau</a>
                     </li>
                     <li class='max-lg:border-b max-lg:py-3 px-3'><a href='javascript:void(0)'
-                            class='hover:text-[#007bff] text-[#333] block font-semibold text-[15px]'>Team</a>
+                            class='hover:text-[#007bff] text-[#333] block font-semibold text-[15px]'>Backlog</a>
                     </li>
                     <li class='max-lg:border-b max-lg:py-3 px-3'><a href='javascript:void(0)'
-                            class='hover:text-[#007bff] text-[#333] block font-semibold text-[15px]'>Feature</a>
+                            class='hover:text-[#007bff] text-[#333] block font-semibold text-[15px]'>Formulaire</a>
                     </li>
                     <li class='max-lg:border-b max-lg:py-3 px-3'><a href='javascript:void(0)'
-                            class='hover:text-[#007bff] text-[#333] block font-semibold text-[15px]'>Blog</a>
+                            class='hover:text-[#007bff] text-[#333] block font-semibold text-[15px]'>Chronologie</a>
                     </li>
                 </ul>
             </div>
