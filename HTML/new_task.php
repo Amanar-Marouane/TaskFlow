@@ -27,13 +27,13 @@ $pdo = $db->connect();
     <div class="relative">
         <select name="assignedTo" class="block w-full px-4 py-2 border rounded-lg appearance-none focus:ring-2 focus:ring-blue-500 focus:outline-none">
             <option disabled>-- Assigned to --</option>
-            <option value="0">Not assigned</option>
+            <option value="Not assigned">Not assigned</option>
             <?php
-            $stmt = $pdo->prepare("SELECT user_id, full_name FROM users;");
+            $stmt = $pdo->prepare("SELECT full_name FROM users;");
             $stmt->execute();
             $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
             foreach ($rows as $row) {
-                echo "<option value=" . $row['user_id'] . ">" . $row['full_name'] . "</option>";
+                echo "<option value=" . $row['full_name'] . ">" . $row['full_name'] . "</option>";
             }
             ?>
         </select>

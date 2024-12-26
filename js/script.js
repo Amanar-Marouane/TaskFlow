@@ -32,3 +32,8 @@ document.addEventListener("DOMContentLoaded", function () {
         })
     }
 })
+
+function toggleStatusForm() {
+    const form = document.getElementById('status-form');
+    form.classList.toggle('hidden');
+}

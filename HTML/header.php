@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>New Task</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script defer src="./../JS/scriptjs"></script>
+    <script defer src="./../JS/script.js"></script>
     <link rel="stylesheet" href="./../CSS/style.css">
 </head>
 
@@ -43,7 +43,7 @@
                         </a>
                     </li>
                     <li class='max-lg:border-b max-lg:py-3 px-3'>
-                        <a href='./index.php'
+                        <a href='./../html/index.php'
                             class='hover:text-[#007bff] text-[#007bff] block font-semibold text-[15px]'>Tableau</a>
                     </li>
                     <li class='max-lg:border-b max-lg:py-3 px-3'><a href='javascript:void(0)'
