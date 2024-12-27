@@ -60,7 +60,7 @@
                 <span class="text-sm text-gray-600">Bug</span>
             </div>
         </div>
-        <button class="bg-[#007bff] text-white px-4 py-2 rounded shadow"><a href="./new_task.php">Add Task</a></button>
+        <button class="bg-[#007bff] text-white px-4 py-2 rounded shadow"><a href="./../controllers/Controller.php?action=select">Add Task</a></button>
     </div>
 </section>
 <section class="container mx-auto p-4 min-h-screen bg-gray-200">

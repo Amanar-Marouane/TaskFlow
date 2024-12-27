@@ -62,11 +62,16 @@
         <p class="text-xs text-gray-500">Created at: <?php echo $created_at; ?></p>
     </div>
 
-    <div class="mt-4">
+    <div class="mt-4 flex space-x-4">
         <button
             onclick="toggleStatusForm()"
             class="bg-blue-500 text-white px-4 py-2 rounded shadow">
             Change Status
+        </button>
+        <button
+            onclick="toggleReassignForm()"
+            class="bg-blue-500 text-white px-4 py-2 rounded shadow">
+            Reassign Task
         </button>
     </div>
 
@@ -86,6 +91,32 @@
                 type="submit"
                 class="bg-green-500 text-white px-4 py-2 rounded shadow">
                 Update Status
+            </button>
+        </form>
+    </div>
+
+    <div id="reassign-form" class="hidden mt-4 bg-white border border-gray-300 rounded shadow p-4">
+        <form action="./../controllers/Controller.php?action=reassign" method="POST" class="space-y-4">
+            <input type="hidden" name="task_id" value="<?php echo $task_id; ?>">
+
+            <div>
+                <label for="assigned_to" class="block text-sm font-medium text-gray-700">Reassign To</label>
+                <select id="assigned_to" name="assigned_to" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                    <option disabled>-- Assigned to --</option>
+                    <option value="Not assigned">Not assigned</option>
+                    <?php
+                    foreach ($rows as $row) {
+                        extract($row);
+                        echo "<option value=" . $full_name . ">" . $full_name . "</option>";
+                    }
+                    ?>
+                </select>
+            </div>
+
+            <button
+                type="submit"
+                class="bg-green-500 text-white px-4 py-2 rounded shadow">
+                Reassign Task
             </button>
         </form>
     </div>

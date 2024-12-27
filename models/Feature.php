@@ -2,7 +2,6 @@
 class Feature extends Basic
 {
     private $priority;
-    public function __construct() {}
 
     public function validation()
     {

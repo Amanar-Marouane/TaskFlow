@@ -1,12 +1,15 @@
 <?php
 class Basic
 {
+    private $pdo;
     protected $task_title;
     protected $task_desc;
     protected $task_status;
     protected $assigned_to;
 
-    public function __construct() {}
+    public function __construct($pdo) {
+        $this->pdo = $pdo;
+    }
 
     public function get($property)
     {
@@ -45,9 +48,7 @@ class Basic
         $this->assigned_to = $_POST['assignedTo'];
         if ($this->task_desc == "") $this->task_desc = null;
 
-        $db = new Db();
-        $pdo = $db->connect();
-        $stmt = $pdo->prepare("INSERT INTO tasks (task_title, task_description, task_status, task_type, assigned_to, importance) VALUES
+        $stmt = $this->pdo->prepare("INSERT INTO tasks (task_title, task_description, task_status, task_type, assigned_to, importance) VALUES
                                     (:task_title, :task_desc, :task_status, '$type', :assigned_to, :importance);");
         if ($importance === null) {
             $stmt->bindValue(':importance', null, PDO::PARAM_NULL);
@@ -96,9 +97,7 @@ class Basic
                                 M252.02,47.177c0,3.503-2.85,6.353-6.353,6.353s-6.353-2.85-6.353-6.353s2.85-6.353,6.353-6.353S252.02,43.674,252.02,47.177z"/>
                         </g>
                     </svg>';
-        $db = new Db();
-        $pdo = $db->connect();
-        $stmt = $pdo->prepare("SELECT * FROM tasks WHERE task_status = '$status';");
+        $stmt = $this->pdo->prepare("SELECT * FROM tasks WHERE task_status = '$status';");
         $stmt->execute();
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
         foreach ($rows as $row) {

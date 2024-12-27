@@ -37,3 +37,8 @@ function toggleStatusForm() {
     const form = document.getElementById('status-form');
     form.classList.toggle('hidden');
 }
+
+function toggleReassignForm() {
+    const form = document.getElementById('reassign-form');
+    form.classList.toggle('hidden');
+}

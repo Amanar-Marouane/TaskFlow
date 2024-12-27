@@ -1,8 +1,3 @@
-<?php
-require_once("./../db/Db.php");
-$db = new Db();
-$pdo = $db->connect();
-?>
 <?php if (isset($_GET['error'])): ?>
     <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
         <strong class="font-bold">Error: </strong>
@@ -15,7 +10,7 @@ $pdo = $db->connect();
         </button>
     </div>
 <?php endif; ?>
-<?php require_once("./header.php") ?>
+<?php require_once("./../html/header.php") ?>
 
 <form class="bg-gray-100 border border-gray-300 rounded shadow p-4 space-y-4" action="./../controllers/Controller.php?action=create" method="POST">
     <div class="flex items-center gap-2">
@@ -29,11 +24,9 @@ $pdo = $db->connect();
             <option disabled>-- Assigned to --</option>
             <option value="Not assigned">Not assigned</option>
             <?php
-            $stmt = $pdo->prepare("SELECT full_name FROM users;");
-            $stmt->execute();
-            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
             foreach ($rows as $row) {
-                echo "<option value=" . $row['full_name'] . ">" . $row['full_name'] . "</option>";
+                extract($row);
+                echo "<option value=" . $full_name . ">" . $full_name . "</option>";
             }
             ?>
         </select>
@@ -92,4 +85,4 @@ $pdo = $db->connect();
 </form>
 
 
-<?php require_once("./footer.php") ?>
+<?php require_once("./../html/footer.php") ?>

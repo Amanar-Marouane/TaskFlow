@@ -5,8 +5,12 @@ class User
 {
     private $full_name;
     private $email;
+    private $pdo;
 
-    public function __construct() {}
+    public function __construct($pdo)
+    {
+        $this->pdo = $pdo;
+    }
 
     public function get($property)
     {
@@ -34,9 +38,7 @@ class User
             } elseif (!preg_match("/^[a-zA-Z\s]+$/", $_POST['full_name'])) {
                 throw new Exception("Full name can only contain letters and spaces.");
             } else {
-                $db = new Db();
-                $pdo = $db->connect();
-                $stmt = $pdo->prepare("SELECT * FROM users WHERE full_name = :name OR email = :email;");
+                $stmt = $this->pdo->prepare("SELECT * FROM users WHERE full_name = :name OR email = :email;");
                 $stmt->bindParam(':name', $_POST['full_name']);
                 $stmt->bindParam(':email', $_POST['email']);
                 $stmt->execute();
@@ -54,9 +56,7 @@ class User
     {
         $this->full_name = $_POST['full_name'];
         $this->email = $_POST['email'];
-        $db = new Db();
-        $pdo = $db->connect();
-        $stmt = $pdo->prepare("INSERT INTO users (full_name, email) VALUES (:name, :email);");
+        $stmt = $this->pdo->prepare("INSERT INTO users (full_name, email) VALUES (:name, :email);");
         $stmt->bindParam(':name', $_POST['full_name']);
         $stmt->bindParam(':email', $_POST['email']);
         $stmt->execute();
@@ -66,9 +66,7 @@ class User
 
     public function render()
     {
-        $db = new Db();
-        $pdo = $db->connect();
-        $stmt = $pdo->prepare("SELECT * FROM users;");
+        $stmt = $this->pdo->prepare("SELECT * FROM users;");
         $stmt->execute();
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
         foreach ($rows as $row) {

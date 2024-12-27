@@ -8,6 +8,13 @@ require_once('./../models/Task.php');
 
 class Controller
 {
+    private $pdo;
+
+    public function __construct()
+    {
+        $this->pdo = Db::getInstance();
+    }
+
     public function requestHandler()
     {
         $action = $_GET["action"];
@@ -24,6 +31,9 @@ class Controller
             case 'update':
                 $this->taskUpdater();
                 break;
+            case 'select':
+                $this->selectRender();
+                break;
         }
     }
 
@@ -33,17 +43,17 @@ class Controller
             $type = $_POST["taskType"];
             switch ($type) {
                 case 'basic':
-                    $task = new Basic();
+                    $task = new Basic($this->pdo);
                     if ($task->validation()) $task->createTask('Basic', null);
                     break;
 
                 case 'bug':
-                    $task = new Bug();
+                    $task = new Bug($this->pdo);
                     $task->validation();
                     break;
 
                 case 'feature':
-                    $task = new Feature();
+                    $task = new Feature($this->pdo);
                     $task->validation();
                     break;
             }
@@ -57,7 +67,7 @@ class Controller
     private function userHandler()
     {
         try {
-            $user = new User();
+            $user = new User($this->pdo);
             $user->validation();
         } catch (Exception $e) {
             $errorMessage = $e->getMessage();
@@ -68,27 +78,25 @@ class Controller
 
     public function usersRender()
     {
-        $data = new User();
+        $data = new User($this->pdo);
         $data->render();
     }
 
     public function tasksRender($staus)
     {
-
-
         switch ($staus) {
             case "To do":
-                $data = new Basic();
+                $data = new Basic($this->pdo);
                 $data->render("To do");
                 break;
 
             case "In progress":
-                $data = new Bug();
+                $data = new Bug($this->pdo);
                 $data->render("In progress");
                 break;
 
             case "Done":
-                $data = new Feature();
+                $data = new Feature($this->pdo);
                 $data->render("Done");
                 break;
         }
@@ -97,7 +105,7 @@ class Controller
     private function detailsRender()
     {
         try {
-            $details = new Task();
+            $details = new Task($this->pdo);
             $details->showDetails();
         } catch (Exception) {
             header("Location: ./../html/index.php?error=" . urlencode("Something went wrong. Check your connection."));
@@ -108,12 +116,17 @@ class Controller
     private function taskUpdater()
     {
         try {
-            $update = new Task();
+            $update = new Task($this->pdo);
             $update->update();
         } catch (Exception) {
             header("Location: ./../html/index.php?error=" . urlencode("Something went wrong. Check your connection."));
             exit();
         }
+    }
+
+    private function selectRender(){
+        $select = new Task($this->pdo);
+        $select->selectRendering();
     }
 }
 
