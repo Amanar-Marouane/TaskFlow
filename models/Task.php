@@ -10,8 +10,9 @@ class Task
         $pdo = $db->connect();
         $stmt = $pdo->prepare("SELECT * FROM tasks WHERE task_id = '$id';");
         $stmt->execute();
-        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        foreach ($rows as $row) {
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        if($row) {
+            extract($row);
             include("./../html/details.php");
         }
     }

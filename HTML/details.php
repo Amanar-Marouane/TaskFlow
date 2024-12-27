@@ -36,36 +36,30 @@
                                     M252.02,47.177c0,3.503-2.85,6.353-6.353,6.353s-6.353-2.85-6.353-6.353s2.85-6.353,6.353-6.353S252.02,43.674,252.02,47.177z"/>
                             </g>
                         </svg>';
-            if ($row["task_type"] == "Bug") echo $bug;
-            elseif ($row["task_type"] == "Basic") echo $basic;
+            if ($task_type == "Bug") echo $bug;
+            elseif ($task_type == "Basic") echo $basic;
             else echo $feature;
             ?>
             <h3 class="font-semibold text-lg">
                 <?php
-                echo $row["task_title"] . "(" . $row["importance"] . ")";
+                echo $task_title . "(" . $importance . ")";
                 ?>
             </h3>
         </div>
         <p class="text-sm text-gray-600">
             <?php
-            echo $row["task_description"];
+            echo $task_description;
             ?>
         </p>
         <div class="flex items-center space-x-2 mt-2">
             <span class="inline-block w-4 h-4 bg-green-500 rounded-full"></span>
-            <span class="text-sm text-gray-600">Assigned to: <?php
-                                                                echo $row["assigned_to"];
-                                                                ?></span>
+            <span class="text-sm text-gray-600">Assigned to: <?php echo $assigned_to; ?></span>
         </div>
         <div class="flex items-center space-x-2 mt-2">
             <span class="inline-block w-4 h-4 bg-yellow-500 rounded-full"></span>
-            <span class="text-sm text-gray-600">Current status: <?php
-                                                                echo $row["task_status"];
-                                                                ?></span>
+            <span class="text-sm text-gray-600">Current status: <?php echo $task_status; ?></span>
         </div>
-        <p class="text-xs text-gray-500">Created at: <?php
-                                                        echo $row["created_at"];
-                                                        ?></p>
+        <p class="text-xs text-gray-500">Created at: <?php echo $created_at; ?></p>
     </div>
 
     <div class="mt-4">
@@ -78,7 +72,7 @@
 
     <div id="status-form" class="hidden mt-4 bg-white border border-gray-300 rounded shadow p-4">
         <form action="./../controllers/Controller.php?action=update" method="POST" class="space-y-4">
-            <input type="hidden" name="task_id" value="<?php echo $row["task_id"]; ?>">
+            <input type="hidden" name="task_id" value="<?php echo $task_id; ?>">
             <div>
                 <label for="task_status" class="block text-sm font-medium text-gray-700">Change Task Status</label>
                 <select id="task_status" name="task_status" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
