@@ -34,6 +34,9 @@ class Controller
             case 'select':
                 $this->selectRender();
                 break;
+            case 'reassign':
+                $this->reassigning();
+                break;
         }
     }
 
@@ -127,6 +130,11 @@ class Controller
     private function selectRender(){
         $select = new Task($this->pdo);
         $select->selectRendering();
+    }
+
+    private function reassigning () {
+        $reassign = new Task($this->pdo);
+        $reassign->reassigning();
     }
 }
 

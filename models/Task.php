@@ -49,4 +49,14 @@ class Task
         }
         include("./../html/new_task.php");
     }
+
+    public function reassigning(){
+        $task_id = $_POST['task_id'];
+        $assigned_to = $_POST['assigned_to'];
+        $stmt = $this->pdo->prepare("UPDATE tasks SET assigned_to = :assigned_to WHERE task_id = :task_id;");
+        $stmt->bindParam(':assigned_to', $assigned_to, PDO::PARAM_STR);
+        $stmt->bindParam(':task_id', $task_id);
+        $stmt->execute();
+        header("Location: ./../html/index.php");
+    }
 }
